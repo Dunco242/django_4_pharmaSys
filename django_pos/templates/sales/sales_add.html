@@ -210,7 +210,6 @@
         },
         // Adds a product to the sale object
         add_product: function (item) {
-            this.items.note = $('textarea[name="note"]').val();
             this.items.products.push(item);
             this.list_product();
 
@@ -509,6 +508,7 @@
             sale.items.tax_percentage = $('input[name="tax_percentage"]').val();
             sale.items.amount_payed = $('input[name="amount_payed"]').val(); 
             sale.items.amount_change = roundTo($('input[name="amount_payed"]').val() - $('input[name="grand_total"]').val(), 2); 
+            sale.items.note = $('textarea[name="note"]').val();
 
             console.log("Sale:")
             console.log(sale.items)
@@ -545,8 +545,10 @@
                 },
             }).done(function (data){
                 console.log ("Ajax Done");
+                alert(data)
             }).fail(function (data, jqXHR, textStatus, errorThrown){
                 console.log ("Ajax Fail");
+                console.log(data)
                 alert(textStatus + ':' + errorThrown);
             });
             
