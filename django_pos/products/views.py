@@ -200,8 +200,7 @@ def ProductsUpdateView(request, product_id):
         # Get the product to update
         product = Product.objects.get(id=product_id)
     except Exception as e:
-        messages.success(
-            request, 'There was an error trying to get the product!', extra_tags="danger")
+        messages.success(request, 'There was an error trying to get the product!', extra_tags="danger")
         print(e)
         return redirect('products:products_list')
 
@@ -214,7 +213,7 @@ def ProductsUpdateView(request, product_id):
 
     if request.method == 'POST':
         try:
-            # Save the POST arguements
+            # Save the POST arguments
             data = request.POST
 
             attributes = {
@@ -226,27 +225,25 @@ def ProductsUpdateView(request, product_id):
             }
 
             # Check if a product with the same attributes exists
-            if product.objects.filter(**attributes).exists():
-                messages.error(request, 'Product already exists!',
-                               extra_tags="warning")
+            if Product.objects.exclude(id=product_id).filter(**attributes).exists():
+                messages.error(request, 'Product already exists!', extra_tags="warning")
                 return redirect('products:products_add')
 
-            # Get the product to update
-            product = Product.objects.filter(
-                id=product_id).update(**attributes)
+            # Update the product
+            Product.objects.filter(id=product_id).update(**attributes)
 
-            product = Product.objects.get(id=product_id)
+            # Retrieve the updated product
+            updated_product = Product.objects.get(id=product_id)
 
-            messages.success(request, '¡Product: ' + product.name +
-                             ' updated successfully!', extra_tags="success")
+            messages.success(request, 'Product: ' + updated_product.name + ' updated successfully!', extra_tags="success")
             return redirect('products:products_list')
         except Exception as e:
-            messages.success(
-                request, 'There was an error during the update!', extra_tags="danger")
+            messages.success(request, 'There was an error during the update!', extra_tags="danger")
             print(e)
             return redirect('products:products_list')
 
     return render(request, "products/products_update.html", context=context)
+
 
 
 @login_required(login_url="/accounts/login/")
@@ -263,7 +260,7 @@ def ProductsDeleteView(request, product_id):
                          ' deleted!', extra_tags="success")
         return redirect('products:products_list')
     except Exception as e:
-        messages.success(
+        messages.error(
             request, 'There was an error during the elimination!', extra_tags="danger")
         print(e)
         return redirect('products:products_list')

@@ -29,6 +29,7 @@ def CustomersAddView(request):
             "address": data['address'],
             "email": data['email'],
             "phone": data['phone'],
+            "allergies": data['allergies'],
         }
 
         # Check if a customer with the same attributes exists
@@ -89,6 +90,7 @@ def CustomersUpdateView(request, customer_id):
                 "address": data['address'],
                 "email": data['email'],
                 "phone": data['phone'],
+                "allergies": data['allergies'],
             }
 
             # Check if a customer with the same attributes exists

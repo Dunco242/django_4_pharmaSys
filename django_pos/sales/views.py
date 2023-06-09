@@ -34,6 +34,11 @@ def SalesAddView(request):
 
     if request.method == 'POST':
         if is_ajax(request=request):
+            
+            note_text = data.get('note', '')  # Get the note text from the data
+            print(note_text)
+            note = Note.objects.create(text=note_text)
+            note.save()
             # Save the POST arguements
             data = json.load(request)
 
@@ -45,6 +50,7 @@ def SalesAddView(request):
                 "tax_percentage": float(data["tax_percentage"]),
                 "amount_payed": float(data["amount_payed"]),
                 "amount_change": float(data["amount_change"]),
+                "note": note,
             }
             try:
                 # Create the sale

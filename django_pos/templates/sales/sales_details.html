@@ -15,7 +15,7 @@
 {% endblock stylesheets %}
 
 <!-- Page Heading -->
-{% block heading %}Sale ID: {{sale.id}}, details{% endblock heading %}
+{% block heading %}Sale ID: {{ sale.id }}, details{% endblock heading %}
 
 <!-- Page content  -->
 {% block content %}
@@ -56,11 +56,11 @@
                                         <tbody>
                                             {% for detail in details %}
                                             <tr>
-                                                <td>{{forloop.counter}}</td>
-                                                <td>{{detail.product.name}}</td>
-                                                <td>{{detail.price}}</td>
-                                                <td class="text-center">{{detail.quantity}}</td>
-                                                <td>{{detail.total_detail}}</td>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ detail.product.name }}</td>
+                                                <td>{{ detail.price }}</td>
+                                                <td class="text-center">{{ detail.quantity }}</td>
+                                                <td>{{ detail.total_detail }}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -81,49 +81,59 @@
                                 <div class="form-group">
                                     <label for="customer">Customer</label>
                                     <select name="customer" class="form-control" id="searchbox_customers" disabled readonly>
-                                        <option value="{{sale.customer.id}}">{{sale.customer.get_full_name}}</option>
+                                        <option value="{{ sale.customer.id }}">{{ sale.customer.get_full_name }}</option>
                                     </select>
-                                <div class="form-group mt-4">
+                                </div>
+                                <div class="form-group">
                                     <label>Subtotal</label>
                                     <div class="input-group">
-                                        <input name="sub_total" class="form-control" value="{{sale.sub_total}}" readonly>
+                                        <input name="sub_total" class="form-control" value="{{ sale.sub_total }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Tax Inclusive (%)</label>
                                     <div class="input-group">
-                                        <input name="tax_percentage" class="form-control" value="{{sale.tax_percentage}}" readonly>
+                                        <input name="tax_percentage" class="form-control" value="{{ sale.tax_percentage }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Tax Amount</label>
                                     <div class="input-group">
-                                        <input name="tax_amount" class="form-control" value="{{sale.tax_amount}}" readonly>
+                                        <input name="tax_amount" class="form-control" value="{{ sale.tax_amount }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Grand Total</label>
                                     <div class="input-group">
-                                        <input name="grand_total" class="form-control" value="{{sale.grand_total}}" readonly>
+                                        <input name="grand_total" class="form-control" value="{{ sale.grand_total }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Amount payed</label>
+                                    <label>Amount paid</label>
                                     <div class="input-group">
-                                        <input name="amount_payed" class="form-control" value="{{sale.amount_payed}}" readonly>
+                                        <input name="amount_paid" class="form-control" value="{{ sale.amount_paid }}" readonly>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label>Change</label>
+                                    <div class="input-group">
+                                        <input name="amount_change" class="form-control" value="{{ sale.amount_change }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Notes</label>
+                                    <textarea name="note" class="form-control">{{ sale.note }}</textarea>
+                                </div>
                             </div>
                             <!--End card-body-->
+                        </div>
+                        <!--End Right column-->
                     </div>
-                    <!--End Right column-->
+                    <!--End row-->
                 </div>
-                <!--End row-->
+                <!--End card-body-->
             </div>
-            <!--End card-body-->
         </div>
-
     </div>
 </form>
 {% endblock content %}
@@ -143,9 +153,7 @@
 <script>
     
 // Products datatable
-
-tblProducts = $('#table_products').DataTable({
-});
+tblProducts = $('#table_products').DataTable({});
                     
 </script>
 {% endblock javascripts %}

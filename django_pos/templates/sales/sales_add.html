@@ -118,12 +118,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Amount payed</label>
+                                    <label>Amount paid</label>
                                     <div class="input-group">
                                         <input name="amount_payed" class="form-control" required>
                                     </div>
                                 </div>
-
+                                <!-- Notes field -->
+                                <div class="form-group">
+                                    <label>Notes</label>
+                                    <textarea name="note" class="form-control"></textarea>
+                                </div>
                                 <button type="submit" class="btn btn-success font-weight-bold">Create sale</button>
                             </div>
                             <!--End card-body-->
@@ -176,6 +180,7 @@
             tax_percentage : 0.00, 
             amount_payed : 0.00, 
             amount_change : 0.00,
+            note : '',
             products: [
 
             ]
@@ -196,7 +201,7 @@
 
             //Update the sale subtotal, grand total, and tax amount
             this.items.sub_total = roundTo(sub_total, 2);
-            this.items.grand_total = roundTo(this.items.sub_total, 2);
+            this.items.grand_total = roundTo(this.items.sub_total, 2) + roundTo(this.items.sub_total * (tax_percentage / 100), 2);
             this.items.tax_amount = roundTo(this.items.sub_total * (tax_percentage / 100), 2);
     
             $('input[name="sub_total"]').val(this.items.sub_total);
@@ -205,8 +210,10 @@
         },
         // Adds a product to the sale object
         add_product: function (item) {
+            this.items.note = $('textarea[name="note"]').val();
             this.items.products.push(item);
             this.list_product();
+
         },
         // Shows the selected product in the table
         list_product: function () {
@@ -484,13 +491,14 @@
             };
             
             // Only allow to send if the payed amount is equal or greater than the total
-            if ($('[name="amount_payed"]').val() <= $('[name="grand_total"]').val()) {
+            if (parseFloat($('[name="amount_payed"]').val()) <= parseFloat($('[name="grand_total"]').val())) {
                 Swal.fire({
-                    title: 'Payable Amount is lower that the Grand Total',
+                    title: 'Payable Amount is lower than the Grand Total',
                     icon: 'warning',
                 });
                 return false;
             }
+
 
             // Agregamos los datos faltantes al objeto sales
             sale.items.customer = $('select[name="customer"]').val();
@@ -523,7 +531,8 @@
                 url: "{% url 'sales:sales_add' %}",
                 type: "POST",
                 // We need to convert the JS object sale to string
-                data: JSON.stringify(sale.items), 
+                data: JSON.stringify(sale.items),
+ 
                 datatype: "json",
                 processData: false,
                 contentType: false,

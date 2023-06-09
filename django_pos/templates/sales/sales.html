@@ -42,6 +42,7 @@
                             <th style="width:20%">Customer</th>
                             <th class="text-center" style="width:10%">Total</th>
                             <th class="text-center" style="width:5%">Items</th>
+                            <th class="text-center" style="width:15%">Notes</th>
                             <th class="text-center" style="width:10%">Actions</th>
                         </tr>
                     </thead>
@@ -54,6 +55,13 @@
                             <td>{{s.customer.get_full_name}}</td>
                             <td class="text-right" >{{s.grand_total}}</td>
                             <td class="text-center" >{{s.sum_items}}</td>
+                            <td>
+                                {% for note in s.note.all %}
+                                    {{ note.content }}<br>
+                                {% empty %}
+                                    No notes
+                                {% endfor %}
+                            </td>
                             <td class="text-center">
                                 <!--View-->
                                 <a href="{% url 'sales:sales_details' s.id %}" class="text-decoration-none">
@@ -107,7 +115,7 @@
                 titleAttr: 'Print',
                 className: 'btn btn-info',
                 exportOptions: {
-                    columns: [ 0, 1, 2, 3 ,4, 5]
+                    columns: [ 0, 1, 2, 3 ,4, 5, 6]
                 }            
                 },
                 {
@@ -116,7 +124,7 @@
                     titleAttr: 'Download Excel',
                     className: 'btn btn-success ml-2',
                     exportOptions: {
-                        columns: [ 0, 1, 2, 3 ,4, 5 ]
+                        columns: [ 0, 1, 2, 3 ,4, 5, 6 ]
                     } 
                 },
                 {
@@ -129,7 +137,7 @@
                     pageSize: 'A4',
                     title: '*',
                     exportOptions: {
-                        columns: [ 0, 1, 2, 3 ,4 ,5]
+                        columns: [ 0, 1, 2, 3 ,4 ,5, 6]
                     },
                     customize: function (doc) {
                         doc.styles = {
@@ -156,7 +164,7 @@
                                 alignment: 'center'
                             }
                         };
-                        doc.content[1].table.widths = ['10%', '10%', '30%', '20%', '20%', '10%'];
+                        doc.content[1].table.widths = ['10%', '10%', '30%', '20%', '20%', '10%', '15%'];
                         doc.content[1].margin = [0, 35, 0, 0];
                         doc.content[1].layout = {};
                         doc['footer'] = (function (page, pages) {

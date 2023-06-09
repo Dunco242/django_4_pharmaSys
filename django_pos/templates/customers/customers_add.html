@@ -24,7 +24,7 @@
 <div class="row">
     <div class="card col-md-8">
         <div class="card-body">
-            <form action="{% url 'customers:customers_add' %}"  method="post">
+            <form action="{% url 'customers:customers_add' %}" method="post">
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -55,6 +55,12 @@
                     </div>
                 </div>
                 
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputDescription">Allergies</label>
+                        <textarea name="allergies" class="form-control" placeholder="Enter allergies..." rows="2"></textarea>
+                    </div>
+                </div>
 
                 <button type="submit" class="btn btn-success font-weight-bold">Create customer</button>
                
