@@ -35,12 +35,13 @@ def SalesAddView(request):
     if request.method == 'POST':
         if is_ajax(request=request):
             
-            note_text = data.get('note', '')  # Get the note text from the data
-            print(note_text)
-            note = Note.objects.create(text=note_text)
-            note.save()
             # Save the POST arguements
             data = json.load(request)
+
+            print(data)
+            note_text = data.get('note', '')  # Get the note text from the data
+            print(note_text)
+            note = note_text
 
             sale_attributes = {
                 "customer": Customer.objects.get(id=int(data['customer'])),
