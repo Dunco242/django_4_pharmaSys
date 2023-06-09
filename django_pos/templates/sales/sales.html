@@ -56,11 +56,12 @@
                             <td class="text-right" >{{s.grand_total}}</td>
                             <td class="text-center" >{{s.sum_items}}</td>
                             <td>
-                                {% for note in s.note.all %}
-                                    {{ note.content }}<br>
-                                {% empty %}
-                                    No notes
-                                {% endfor %}
+                                {% if s.note %}
+                                  {{s.note}}
+                                {% else %}
+                                  No notes
+                                {% endif %}
+                                
                             </td>
                             <td class="text-center">
                                 <!--View-->
